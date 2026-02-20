@@ -1,4 +1,4 @@
-<![CDATA[# 🐛 react-native-prod-debugger
+# 🐛 react-native-prod-debugger
 
 A comprehensive, **zero-dependency**, in-app debugging toolkit for React Native that works in **production builds**.
 
@@ -8,21 +8,21 @@ Activated by a hidden gesture (3-finger long press), it provides a floating debu
 
 ## ✨ Features
 
-| # | Tool | Description |
-|---|------|-------------|
-| 🌐 | **Network Inspector** | Full HTTP traffic monitor — request/response headers & bodies, status codes, duration, size, GraphQL detection, cURL export |
-| 📋 | **Console Viewer** | Intercepted `console.log/warn/error/info/debug` with level filters, search, and copy |
-| 🔍 | **State Inspector** | Live state tree viewer for Redux, Zustand, MobX, or any custom store |
-| 🚩 | **Feature Flags** | Toggle boolean flags, edit string/number/JSON values at runtime with group filtering |
-| ⚙️ | **Remote Config** | View Firebase Remote Config or any custom provider with refresh & search |
-| 💾 | **Storage Browser** | Browse, edit, and delete AsyncStorage / MMKV entries with JSON formatting |
-| ⚡ | **Performance Monitor** | Real-time FPS counter, JS thread latency, memory usage, historical chart |
-| 📱 | **Device Info** | Platform, OS version, Hermes status, screen dimensions, scale |
-| 🧭 | **Navigation Inspector** | Current route, params, full state tree, and route history |
-| 💥 | **Crash Reporter** | Captures unhandled JS errors and promise rejections with stack traces |
-| 🎯 | **Custom Actions** | Register developer shortcuts (clear cache, force logout, etc.) |
-| 🔗 | **Deep Link Tester** | Test deep links with presets, URL validation, and history |
-| 📊 | **Timeline** | Visual event logger with category filtering and time deltas |
+| #   | Tool                     | Description                                                                                                                 |
+| --- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| 🌐  | **Network Inspector**    | Full HTTP traffic monitor — request/response headers & bodies, status codes, duration, size, GraphQL detection, cURL export |
+| 📋  | **Console Viewer**       | Intercepted `console.log/warn/error/info/debug` with level filters, search, and copy                                        |
+| 🔍  | **State Inspector**      | Live state tree viewer for Redux, Zustand, MobX, or any custom store                                                        |
+| 🚩  | **Feature Flags**        | Toggle boolean flags, edit string/number/JSON values at runtime with group filtering                                        |
+| ⚙️  | **Remote Config**        | View Firebase Remote Config or any custom provider with refresh & search                                                    |
+| 💾  | **Storage Browser**      | Browse, edit, and delete AsyncStorage / MMKV entries with JSON formatting                                                   |
+| ⚡  | **Performance Monitor**  | Real-time FPS counter, JS thread latency, memory usage, historical chart                                                    |
+| 📱  | **Device Info**          | Platform, OS version, Hermes status, screen dimensions, scale                                                               |
+| 🧭  | **Navigation Inspector** | Current route, params, full state tree, and route history                                                                   |
+| 💥  | **Crash Reporter**       | Captures unhandled JS errors and promise rejections with stack traces                                                       |
+| 🎯  | **Custom Actions**       | Register developer shortcuts (clear cache, force logout, etc.)                                                              |
+| 🔗  | **Deep Link Tester**     | Test deep links with presets, URL validation, and history                                                                   |
+| 📊  | **Timeline**             | Visual event logger with category filtering and time deltas                                                                 |
 
 ---
 
@@ -74,21 +74,22 @@ That's it! All 13 tools are ready to use.
 ```tsx
 <DebuggerProvider
   config={{
-    enabled: true,                    // Toggle debugger on/off
-    gesture: 'threeFingerLongPress',  // 'threeFingerLongPress' | 'twoFingerTripleTap' | 'shake' | 'custom'
-    longPressDuration: 800,           // Duration in ms
-    numberOfFingers: 3,               // Number of fingers required
-    interceptConsole: true,           // Auto-start console interception
-    interceptNetwork: true,           // Auto-start network interception
-    interceptCrashes: true,           // Auto-start crash capturing
-    maxNetworkRequests: 500,          // Max network entries in memory
-    maxConsoleEntries: 1000,          // Max console entries in memory
-    appVersion: '1.2.3',             // Shown in Device Info
-    buildNumber: '42',               // Shown in Device Info
-    bundleId: 'com.myapp',           // Shown in Device Info
-    disabledPlugins: ['timeline'],    // Disable specific plugins by ID
-    bubbleSize: 50,                   // Debug bubble size in dp
-    theme: {                          // Custom theme overrides
+    enabled: true, // Toggle debugger on/off
+    gesture: 'threeFingerLongPress', // 'threeFingerLongPress' | 'twoFingerTripleTap' | 'shake' | 'custom'
+    longPressDuration: 800, // Duration in ms
+    numberOfFingers: 3, // Number of fingers required
+    interceptConsole: true, // Auto-start console interception
+    interceptNetwork: true, // Auto-start network interception
+    interceptCrashes: true, // Auto-start crash capturing
+    maxNetworkRequests: 500, // Max network entries in memory
+    maxConsoleEntries: 1000, // Max console entries in memory
+    appVersion: '1.2.3', // Shown in Device Info
+    buildNumber: '42', // Shown in Device Info
+    bundleId: 'com.myapp', // Shown in Device Info
+    disabledPlugins: ['timeline'], // Disable specific plugins by ID
+    bubbleSize: 50, // Debug bubble size in dp
+    theme: {
+      // Custom theme overrides
       accent: '#FF6B6B',
       background: '#1A1A2E',
     },
@@ -198,7 +199,7 @@ const navigationRef = useRef(null);
 
 <NavigationContainer ref={navigationRef} onReady={() => setNavigationRef(navigationRef)}>
   {/* ... */}
-</NavigationContainer>
+</NavigationContainer>;
 ```
 
 ### Custom Actions
@@ -253,12 +254,7 @@ import { useDebugger } from 'react-native-prod-debugger';
 function SettingsScreen() {
   const { show, hide, toggle, isVisible } = useDebugger();
 
-  return (
-    <Button
-      title="Open Debug Panel"
-      onPress={show}
-    />
-  );
+  return <Button title="Open Debug Panel" onPress={show} />;
 }
 ```
 
@@ -292,21 +288,21 @@ registerPlugin({
 
 Use these IDs with `disabledPlugins` to selectively disable tools:
 
-| Plugin | ID |
-|--------|-----|
-| Network Inspector | `network-inspector` |
-| Console Viewer | `console-viewer` |
-| State Inspector | `state-inspector` |
-| Feature Flags | `feature-flags` |
-| Remote Config | `remote-config` |
-| Storage Browser | `storage-browser` |
-| Performance Monitor | `performance-monitor` |
-| Device Info | `device-info` |
+| Plugin               | ID                     |
+| -------------------- | ---------------------- |
+| Network Inspector    | `network-inspector`    |
+| Console Viewer       | `console-viewer`       |
+| State Inspector      | `state-inspector`      |
+| Feature Flags        | `feature-flags`        |
+| Remote Config        | `remote-config`        |
+| Storage Browser      | `storage-browser`      |
+| Performance Monitor  | `performance-monitor`  |
+| Device Info          | `device-info`          |
 | Navigation Inspector | `navigation-inspector` |
-| Crash Reporter | `crash-reporter` |
-| Custom Actions | `custom-actions` |
-| Deep Link Tester | `deep-link-tester` |
-| Timeline | `timeline` |
+| Crash Reporter       | `crash-reporter`       |
+| Custom Actions       | `custom-actions`       |
+| Deep Link Tester     | `deep-link-tester`     |
+| Timeline             | `timeline`             |
 
 ---
 
@@ -347,4 +343,3 @@ react-native-prod-debugger/
 ## 📄 License
 
 MIT © [Aman Verma](https://github.com/amanverma)
-]]>
