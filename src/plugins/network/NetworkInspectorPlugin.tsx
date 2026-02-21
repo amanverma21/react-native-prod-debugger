@@ -29,7 +29,12 @@ import {
 const NetworkInspectorPanel: React.FC<PluginComponentProps> = ({ theme }) => {
   const [requests, setRequests] = useState<NetworkRequest[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRequest, setSelectedRequest] = useState<NetworkRequest | null>(null);
+  const [selectedRequestId, setSelectedRequestId] = useState<string | null>(null);
+
+  const selectedRequest = useMemo(
+    () => requests.find((r) => r.id === selectedRequestId) || null,
+    [requests, selectedRequestId],
+  );
   const [activeDetailTab, setActiveDetailTab] = useState<
     'headers' | 'request' | 'response' | 'timing'
   >('headers');
@@ -67,7 +72,7 @@ const NetworkInspectorPanel: React.FC<PluginComponentProps> = ({ theme }) => {
 
   const handleClear = useCallback(() => {
     NetworkInterceptor.clear();
-    setSelectedRequest(null);
+    setSelectedRequestId(null);
   }, []);
 
   const handleCopyCurl = useCallback((req: NetworkRequest) => {
@@ -95,7 +100,7 @@ const NetworkInspectorPanel: React.FC<PluginComponentProps> = ({ theme }) => {
         theme={theme}
         activeTab={activeDetailTab}
         onTabChange={setActiveDetailTab}
-        onBack={() => setSelectedRequest(null)}
+        onBack={() => setSelectedRequestId(null)}
         onCopyCurl={handleCopyCurl}
         onShare={handleShareRequest}
       />
@@ -181,7 +186,7 @@ const NetworkInspectorPanel: React.FC<PluginComponentProps> = ({ theme }) => {
         data={filteredRequests}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <RequestRow request={item} theme={theme} onPress={() => setSelectedRequest(item)} />
+          <RequestRow request={item} theme={theme} onPress={() => setSelectedRequestId(item.id)} />
         )}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
@@ -354,7 +359,12 @@ const RequestDetail: React.FC<RequestDetailProps> = ({
           <BodyView body={request.requestBody} theme={theme} label="Request Body" />
         )}
         {activeTab === 'response' && (
-          <BodyView body={request.responseBody} theme={theme} label="Response Body" />
+          <BodyView
+            body={request.responseBody}
+            theme={theme}
+            label="Response Body"
+            isPending={!request.endTime}
+          />
         )}
         {activeTab === 'timing' && <TimingView request={request} theme={theme} />}
       </ScrollView>
@@ -407,7 +417,8 @@ const BodyView: React.FC<{
   body: string | undefined;
   theme: PluginComponentProps['theme'];
   label: string;
-}> = ({ body, theme, label }) => {
+  isPending?: boolean;
+}> = ({ body, theme, label, isPending }) => {
   const formatted = useMemo(() => {
     if (!body) return null;
     try {
@@ -435,7 +446,9 @@ const BodyView: React.FC<{
           </Text>
         </View>
       ) : (
-        <Text style={[styles.emptyText, { color: theme.textMuted }]}>No body</Text>
+        <Text style={[styles.emptyText, { color: theme.textMuted }]}>
+          {isPending ? 'Pending...' : 'No body'}
+        </Text>
       )}
     </View>
   );
@@ -508,7 +521,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     borderWidth: 1,
   },
-  filterContainer: { maxHeight: 44 },
+  filterContainer: { flexGrow: 0 },
   filterContent: { paddingHorizontal: 12, paddingBottom: 8, gap: 6 },
   filterChip: {
     paddingHorizontal: 12,

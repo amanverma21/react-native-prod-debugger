@@ -200,7 +200,7 @@ const ConsoleRow: React.FC<ConsoleRowProps> = React.memo(
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  filterBar: { maxHeight: 44 },
+  filterBar: { flexGrow: 0 },
   filterContent: { paddingHorizontal: 12, paddingVertical: 8, gap: 6 },
   filterChip: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, borderWidth: 1 },
   filterText: { fontSize: 11, fontWeight: '600' },

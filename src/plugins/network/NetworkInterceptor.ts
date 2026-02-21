@@ -156,10 +156,31 @@ class NetworkInterceptorClass {
             } else if (xhr.responseType === 'json') {
               responseBody =
                 typeof xhr.response === 'string' ? xhr.response : JSON.stringify(xhr.response);
-            } else if (xhr.responseType === 'blob') {
-              responseBody = `[Blob: ${xhr.response?.size || 'unknown'} bytes]`;
-            } else if (xhr.responseType === 'arraybuffer') {
-              responseBody = `[ArrayBuffer: ${xhr.response?.byteLength || 'unknown'} bytes]`;
+            } else if (xhr.responseType === 'blob' || xhr.responseType === 'arraybuffer') {
+              const isBlob = xhr.responseType === 'blob';
+              responseBody = isBlob
+                ? `[Blob: ${xhr.response?.size || 'unknown'} bytes]`
+                : `[ArrayBuffer: ${xhr.response?.byteLength || 'unknown'} bytes]`;
+
+              // Asynchronously attempt to read the contents
+              if (xhr.response && typeof FileReader !== 'undefined') {
+                try {
+                  const reader = new FileReader();
+                  reader.onload = () => {
+                    const text = reader.result;
+                    if (typeof text === 'string') {
+                      self.updateRequest(xhr._debugId, {
+                        responseBody: text,
+                        responseSize: new Blob([text]).size,
+                      });
+                    }
+                  };
+                  const blobToRead = isBlob ? xhr.response : new Blob([xhr.response]);
+                  reader.readAsText(blobToRead);
+                } catch {
+                  // Silently ignore reader errors
+                }
+              }
             } else {
               responseBody = typeof xhr.response === 'string' ? xhr.response : String(xhr.response);
             }
@@ -294,7 +315,26 @@ class NetworkInterceptorClass {
         try {
           responseBody = await clone.text();
         } catch {
-          responseBody = '[Unable to read response body]';
+          try {
+            const blob = await response.clone().blob();
+            responseBody = `[Blob: ${blob.size} bytes]`;
+
+            if (typeof FileReader !== 'undefined') {
+              const reader = new FileReader();
+              reader.onload = () => {
+                const text = reader.result;
+                if (typeof text === 'string') {
+                  self.updateRequest(id, {
+                    responseBody: text,
+                    responseSize: new Blob([text]).size,
+                  });
+                }
+              };
+              reader.readAsText(blob);
+            }
+          } catch {
+            responseBody = '[Unable to read response body]';
+          }
         }
 
         const responseHeaders: Record<string, string> = {};
