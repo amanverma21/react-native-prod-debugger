@@ -5,7 +5,6 @@ import { createTheme } from './theme';
 import { PluginRegistry } from './PluginRegistry';
 import { DebugBubble } from './DebugBubble';
 import { DebugOverlay } from './DebugOverlay';
-import { GestureDetector } from './GestureDetector';
 
 // ─── Built-in Plugin Registrations ──────────────────────────────────────────
 import { createNetworkInspectorPlugin } from '../plugins/network/NetworkInspectorPlugin';
@@ -30,9 +29,7 @@ export const DebuggerContext = createContext<DebuggerContextValue | null>(null);
 
 const DEFAULT_CONFIG: Required<DebuggerConfig> = {
   enabled: true,
-  gesture: 'threeFingerLongPress',
-  longPressDuration: 800,
-  numberOfFingers: 3,
+  startVisible: false,
   interceptConsole: true,
   interceptNetwork: true,
   interceptCrashes: true,
@@ -85,7 +82,7 @@ export const DebuggerProvider: React.FC<DebuggerProviderProps> = ({
 
   const theme = useMemo(() => createTheme(mergedConfig.theme), [mergedConfig.theme]);
 
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(mergedConfig.startVisible);
   const [showOverlay, setShowOverlay] = useState(false);
   const [plugins, setPlugins] = useState<DebuggerPlugin[]>([]);
   const initialized = useRef(false);
@@ -176,14 +173,7 @@ export const DebuggerProvider: React.FC<DebuggerProviderProps> = ({
   return (
     <DebuggerContext.Provider value={contextValue}>
       <View style={styles.root}>
-        <GestureDetector
-          gesture={mergedConfig.gesture}
-          numberOfFingers={mergedConfig.numberOfFingers}
-          longPressDuration={mergedConfig.longPressDuration}
-          onActivate={toggle}
-        >
-          {children}
-        </GestureDetector>
+        {children}
 
         {isVisible && !showOverlay && (
           <DebugBubble

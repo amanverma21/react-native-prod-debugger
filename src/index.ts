@@ -17,7 +17,6 @@ export type {
   DebuggerConfig,
   DebuggerPlugin,
   DebuggerTheme,
-  GestureType,
   NetworkRequest,
   ConsoleEntry,
   ConsoleLevel,

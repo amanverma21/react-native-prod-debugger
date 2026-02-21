@@ -2,9 +2,6 @@ import { ReactNode } from 'react';
 
 // ─── Gesture Configuration ──────────────────────────────────────────────────
 
-/** Supported gesture types for activating the debugger overlay. */
-export type GestureType = 'threeFingerLongPress' | 'twoFingerTripleTap' | 'shake' | 'custom';
-
 // ─── Provider Configuration ─────────────────────────────────────────────────
 
 /** Configuration for the DebuggerProvider. */
@@ -12,14 +9,8 @@ export interface DebuggerConfig {
   /** Whether the debugger is enabled. Defaults to `true`. */
   enabled?: boolean;
 
-  /** Gesture type to activate the overlay. Defaults to `'threeFingerLongPress'`. */
-  gesture?: GestureType;
-
-  /** Duration in ms for long press gestures. Defaults to `800`. */
-  longPressDuration?: number;
-
-  /** Number of fingers for multi-touch gestures. Defaults to `3`. */
-  numberOfFingers?: number;
+  /** Whether the debugger bubble is visible on mount. Defaults to `false`. */
+  startVisible?: boolean;
 
   /** Auto-start console interception on mount. Defaults to `true`. */
   interceptConsole?: boolean;

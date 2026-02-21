@@ -2,7 +2,7 @@
 
 A comprehensive, **zero-dependency**, in-app debugging toolkit for React Native that works in **production builds**.
 
-Activated by a hidden gesture (3-finger long press), it provides a floating debug bubble that opens a rich overlay panel with **13+ built-in tools** — no external desktop app, no dev-only restrictions.
+Activated via a programmatic toggle or a visibility flag, it provides a floating debug bubble that opens a rich overlay panel with **13+ built-in tools** — no external desktop app, no dev-only restrictions.
 
 ---
 
@@ -61,8 +61,7 @@ export default function App() {
 
 ### 2. Activate
 
-**3-finger long press** (800ms) anywhere in your app to toggle the debug bubble.
-
+Set `startVisible: true` in the configuration as shown below or use the `useDebugger()` hook to manually show the debugger.
 Tap the 🐛 bubble to open the full debug overlay.
 
 That's it! All 13 tools are ready to use.
@@ -75,9 +74,7 @@ That's it! All 13 tools are ready to use.
 <DebuggerProvider
   config={{
     enabled: true, // Toggle debugger on/off
-    gesture: 'threeFingerLongPress', // 'threeFingerLongPress' | 'twoFingerTripleTap' | 'shake' | 'custom'
-    longPressDuration: 800, // Duration in ms
-    numberOfFingers: 3, // Number of fingers required
+    startVisible: false, // Whether bubble is shown automatically
     interceptConsole: true, // Auto-start console interception
     interceptNetwork: true, // Auto-start network interception
     interceptCrashes: true, // Auto-start crash capturing
