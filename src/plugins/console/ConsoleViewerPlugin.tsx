@@ -201,14 +201,21 @@ const ConsoleRow: React.FC<ConsoleRowProps> = React.memo(
 const styles = StyleSheet.create({
   container: { flex: 1 },
   filterBar: {
+    flexGrow: 0,
+    flexShrink: 0,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#30363d',
-    paddingBottom: 8,
+    marginBottom: 8,
   },
-  filterContent: { paddingHorizontal: 16, paddingVertical: 6, gap: 8 },
+  filterContent: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    gap: 8,
+    alignItems: 'center',
+  },
   filterChip: {
     paddingHorizontal: 14,
-    paddingVertical: 6,
+    height: 32,
     borderRadius: 6,
     borderWidth: 1,
     justifyContent: 'center',
