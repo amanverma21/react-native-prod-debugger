@@ -200,8 +200,12 @@ const ConsoleRow: React.FC<ConsoleRowProps> = React.memo(
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  filterBar: { height: 44, marginBottom: 8 },
-  filterContent: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
+  filterBar: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#30363d',
+    paddingBottom: 8,
+  },
+  filterContent: { paddingHorizontal: 16, paddingVertical: 6, gap: 8 },
   filterChip: {
     paddingHorizontal: 14,
     paddingVertical: 6,

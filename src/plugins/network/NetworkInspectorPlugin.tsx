@@ -521,8 +521,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     borderWidth: 1,
   },
-  filterContainer: { height: 44, marginBottom: 8 },
-  filterContent: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
+  filterContainer: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#30363d',
+    paddingBottom: 8,
+  },
+  filterContent: { paddingHorizontal: 16, paddingVertical: 6, gap: 8 },
   filterChip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
