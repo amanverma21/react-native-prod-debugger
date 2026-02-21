@@ -521,8 +521,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     borderWidth: 1,
   },
-  filterContainer: { flexGrow: 0 },
-  filterContent: { paddingHorizontal: 16, paddingVertical: 12, gap: 8 },
+  filterContainer: { height: 44, marginBottom: 8 },
+  filterContent: { paddingHorizontal: 16, gap: 8, alignItems: 'center' },
   filterChip: {
     paddingHorizontal: 14,
     paddingVertical: 6,
