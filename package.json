@@ -1,6 +1,6 @@
 {
   "name": "react-native-prod-debugger",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A comprehensive, in-app debugging toolkit for React Native that works in production builds. Hidden gesture activation, network inspector, state viewer, feature flags, and 13+ debugging tools — zero native dependencies.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
