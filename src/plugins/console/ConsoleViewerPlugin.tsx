@@ -201,14 +201,27 @@ const ConsoleRow: React.FC<ConsoleRowProps> = React.memo(
 const styles = StyleSheet.create({
   container: { flex: 1 },
   filterBar: { flexGrow: 0 },
-  filterContent: { paddingHorizontal: 12, paddingVertical: 8, gap: 6 },
-  filterChip: { paddingHorizontal: 10, paddingVertical: 4, borderRadius: 12, borderWidth: 1 },
-  filterText: { fontSize: 11, fontWeight: '600' },
-  searchContainer: { paddingHorizontal: 12, paddingBottom: 8 },
-  searchInput: { height: 36, borderRadius: 8, paddingHorizontal: 12, fontSize: 13, borderWidth: 1 },
-  logRow: {
+  filterContent: { paddingHorizontal: 16, paddingVertical: 12, gap: 8 },
+  filterChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 6,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  filterText: { fontSize: 13, fontWeight: '500' },
+  searchContainer: { paddingHorizontal: 16, paddingBottom: 12 },
+  searchInput: {
+    height: 36,
+    borderRadius: 6,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    fontSize: 13,
+    borderWidth: 1,
+  },
+  logRow: {
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   logHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 4 },
@@ -223,7 +236,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     borderRadius: 6,
   },
-  copyLogText: { fontSize: 11, fontWeight: '600' },
+  copyLogText: { fontSize: 12, fontWeight: '500' },
   emptyContainer: { alignItems: 'center', paddingVertical: 40 },
   emptyText: { fontSize: 13 },
 });

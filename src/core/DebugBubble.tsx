@@ -117,7 +117,14 @@ export const DebugBubble: React.FC<DebugBubbleProps> = ({
         onPress={onPress}
       >
         <View style={styles.iconContainer}>
-          <Text style={[styles.icon, { fontSize: size * 0.45 }]}>🐛</Text>
+          <Text
+            style={[
+              styles.icon,
+              { fontSize: size * 0.35, color: theme.bubbleIcon, fontWeight: '800' },
+            ]}
+          >
+            {'</>'}
+          </Text>
         </View>
       </TouchableOpacity>
     </Animated.View>

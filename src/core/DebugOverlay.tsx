@@ -76,7 +76,7 @@ export const DebugOverlay: React.FC<DebugOverlayProps> = ({ plugins, theme, onCl
           ]}
         >
           <View style={styles.headerLeft}>
-            <Text style={[styles.headerTitle, { color: theme.text }]}>🐛 Prod Debugger</Text>
+            <Text style={[styles.headerTitle, { color: theme.text }]}>Prod Debugger</Text>
           </View>
           <TouchableOpacity
             onPress={handleClose}
@@ -112,7 +112,7 @@ export const DebugOverlay: React.FC<DebugOverlayProps> = ({ plugins, theme, onCl
                 onPress={() => setActiveTab(index)}
                 activeOpacity={0.7}
               >
-                <Text style={styles.tabIcon}>{plugin.icon}</Text>
+                {/* Removed icon to keep the UI strictly minimal */}
                 <Text
                   style={[
                     styles.tabLabel,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   headerLeft: {
@@ -185,25 +185,23 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   tabBarContent: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    gap: 6,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    gap: 8,
   },
   tab: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 6, // Square borders like GitHub/Claude buttons
     borderWidth: 1,
-    gap: 4,
+    // gap removed
   },
-  tabIcon: {
-    fontSize: 14,
-  },
+  // tabIcon removed
   tabLabel: {
-    fontSize: 12,
-    maxWidth: 80,
+    fontSize: 13,
+    maxWidth: 90,
   },
   content: {
     flex: 1,

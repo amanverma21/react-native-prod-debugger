@@ -5,31 +5,31 @@ import type { DebuggerTheme } from './types';
  * High-contrast text, muted backgrounds with alpha transparency for the overlay.
  */
 export const darkTheme: DebuggerTheme = {
-  background: '#000000',
-  surface: '#121212',
-  surfaceAlt: '#1C1C1E',
-  text: '#F5F5F7',
-  textSecondary: '#8E8E93',
-  textMuted: '#48484A',
-  accent: '#0A84FF',
-  accentLight: '#5E5CE6',
-  success: '#30D158',
-  warning: '#FF9F0A',
-  error: '#FF453A',
-  info: '#64D2FF',
-  border: '#2C2C2E',
-  overlay: 'rgba(0, 0, 0, 0.75)',
-  bubbleBackground: '#1C1C1E',
-  bubbleIcon: '#F5F5F7',
-  codeBackground: '#09090B',
-  codeText: '#E5E5EA',
-  headerBackground: '#121212',
-  tabActive: '#F5F5F7',
-  tabInactive: '#636366',
-  statusBarOk: '#30D158',
-  statusBarWarn: '#FF9F0A',
-  statusBarError: '#FF453A',
-  shadow: 'rgba(0, 0, 0, 0.5)',
+  background: '#0d1117', // GitHub canvas
+  surface: '#161b22', // GitHub secondary
+  surfaceAlt: '#21262d', // GitHub tertiary / hover
+  text: '#c9d1d9', // GitHub primary text
+  textSecondary: '#8b949e', // GitHub muted text
+  textMuted: '#6e7681', // GitHub extremely muted
+  accent: '#58a6ff', // GitHub accent blue
+  accentLight: '#79c0ff', // GitHub accent light
+  success: '#3fb950', // GitHub success green
+  warning: '#d29922', // GitHub warning warm
+  error: '#f85149', // GitHub danger red
+  info: '#a5d6ff', // GitHub info blue
+  border: '#30363d', // GitHub border default
+  overlay: 'rgba(1, 4, 9, 0.8)', // GitHub overlay
+  bubbleBackground: '#161b22',
+  bubbleIcon: '#c9d1d9',
+  codeBackground: '#010409', // GitHub darker background for code
+  codeText: '#e6edf3', // GitHub code text
+  headerBackground: '#161b22', // Header background matching surface
+  tabActive: '#c9d1d9',
+  tabInactive: '#8b949e',
+  statusBarOk: '#3fb950',
+  statusBarWarn: '#d29922',
+  statusBarError: '#f85149',
+  shadow: 'rgba(0, 0, 0, 0.8)',
 };
 
 /**
