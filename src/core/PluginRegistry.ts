@@ -20,6 +20,17 @@ class PluginRegistryClass {
     this.notify();
   }
 
+  /** Register multiple plugins at once. Triggers a single notification. */
+  registerBatch(plugins: DebuggerPlugin[]): void {
+    for (const plugin of plugins) {
+      this.plugins.set(plugin.id, {
+        ...plugin,
+        order: plugin.order ?? 100,
+      });
+    }
+    this.notify();
+  }
+
   /** Unregister a plugin by ID. */
   unregister(id: string): void {
     const plugin = this.plugins.get(id);
@@ -84,6 +95,7 @@ class PluginRegistryClass {
         }
       }
     }
+    this.plugins.clear();
   }
 
   /** Clear all plugins from the registry. */

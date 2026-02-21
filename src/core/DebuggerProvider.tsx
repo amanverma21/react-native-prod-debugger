@@ -110,11 +110,13 @@ export const DebuggerProvider: React.FC<DebuggerProviderProps> = ({
       createTimelinePlugin(),
     ];
 
+    const pluginsToRegister: DebuggerPlugin[] = [];
     for (const plugin of builtInPlugins) {
       if (!disabled.has(plugin.id)) {
-        PluginRegistry.register(plugin);
+        pluginsToRegister.push(plugin);
       }
     }
+    PluginRegistry.registerBatch(pluginsToRegister);
 
     PluginRegistry.initAll();
     setPlugins(PluginRegistry.getAll());
@@ -127,6 +129,7 @@ export const DebuggerProvider: React.FC<DebuggerProviderProps> = ({
     return () => {
       unsubscribe();
       PluginRegistry.destroyAll();
+      initialized.current = false;
     };
   }, [mergedConfig.enabled, mergedConfig.disabledPlugins]);
 

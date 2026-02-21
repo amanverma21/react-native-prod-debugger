@@ -1,4 +1,5 @@
-import { Clipboard, Share, Platform } from 'react-native';
+import { Share, Platform } from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 /** Generate a unique ID (collision-safe for debugging purposes). */
 export function generateId(): string {
@@ -147,7 +148,8 @@ export function extractGraphQLInfo(
   if (!body) return null;
   try {
     const parsed = JSON.parse(body);
-    const query: string | undefined = parsed?.query;
+    const firstOp = Array.isArray(parsed) ? parsed[0] : parsed;
+    const query: string | undefined = firstOp?.query;
     if (!query) return null;
 
     // Extract operation type and name
@@ -162,7 +164,7 @@ export function extractGraphQLInfo(
       return { type: 'query', operation: nameMatch[1] };
     }
 
-    return { type: 'query', operation: parsed.operationName || 'Unknown' };
+    return { type: 'query', operation: firstOp.operationName || 'Unknown' };
   } catch {
     return null;
   }

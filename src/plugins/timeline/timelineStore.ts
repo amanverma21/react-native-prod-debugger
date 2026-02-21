@@ -15,13 +15,11 @@ class TimelineStoreClass {
   private maxEvents = 500;
 
   /** Log a timeline event. */
-  log(category: TimelineEvent['category'], title: string, data?: unknown): void {
+  log(eventParams: Omit<TimelineEvent, 'id' | 'timestamp'>): void {
     const event: TimelineEvent = {
       id: generateId(),
       timestamp: Date.now(),
-      category,
-      title,
-      data,
+      ...eventParams,
     };
     this.events = [event, ...this.events].slice(0, this.maxEvents);
     this.notify();
@@ -57,9 +55,25 @@ export const timelineStore = new TimelineStoreClass();
 
 /** Log a timeline event. */
 export function logTimelineEvent(
-  category: TimelineEvent['category'],
-  title: string,
+  categoryOrEvent: TimelineEvent['category'] | Omit<TimelineEvent, 'id' | 'timestamp'>,
+  title?: string,
   data?: unknown,
+  icon?: string,
+  color?: string,
 ): void {
-  timelineStore.log(category, title, data);
+  if (
+    typeof categoryOrEvent === 'object' &&
+    categoryOrEvent !== null &&
+    'title' in categoryOrEvent
+  ) {
+    timelineStore.log(categoryOrEvent as Omit<TimelineEvent, 'id' | 'timestamp'>);
+  } else {
+    timelineStore.log({
+      category: categoryOrEvent as string,
+      title: title || '',
+      data,
+      icon,
+      color,
+    });
+  }
 }

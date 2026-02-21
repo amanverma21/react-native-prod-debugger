@@ -1,6 +1,18 @@
 import type { NetworkRequest } from '../../core/types';
 import { generateId, extractGraphQLInfo } from '../../core/utils';
 
+function serializeBody(body: unknown): string | undefined {
+  if (body === undefined || body === null) return undefined;
+  if (typeof body === 'string') return body;
+  if (typeof FormData !== 'undefined' && body instanceof FormData) return '[FormData]';
+  if (typeof Blob !== 'undefined' && body instanceof Blob) return `[Blob: ${body.size} bytes]`;
+  if (typeof ArrayBuffer !== 'undefined' && body instanceof ArrayBuffer)
+    return `[ArrayBuffer: ${body.byteLength} bytes]`;
+  if (typeof URLSearchParams !== 'undefined' && body instanceof URLSearchParams)
+    return '[URLSearchParams]';
+  return String(body);
+}
+
 type NetworkListener = (requests: NetworkRequest[]) => void;
 
 /**
@@ -113,7 +125,7 @@ class NetworkInterceptorClass {
       };
 
       const startTime = Date.now();
-      const requestBody = typeof body === 'string' ? body : body ? String(body) : undefined;
+      const requestBody = serializeBody(body);
 
       // Extract GraphQL info
       const gqlInfo = extractGraphQLInfo(requestBody);
@@ -133,13 +145,24 @@ class NetworkInterceptorClass {
       self.addRequest(request);
 
       // Listen for completion
-      const originalOnReadyStateChange = xhr.onreadystatechange;
-      xhr.onreadystatechange = function (...args: unknown[]) {
+      xhr.addEventListener('readystatechange', () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
           const endTime = Date.now();
           let responseBody: string | undefined;
           try {
-            responseBody = xhr.responseText;
+            const resType = xhr.responseType as string;
+            if (!resType || resType === 'text' || resType === '') {
+              responseBody = xhr.responseText;
+            } else if (xhr.responseType === 'json') {
+              responseBody =
+                typeof xhr.response === 'string' ? xhr.response : JSON.stringify(xhr.response);
+            } else if (xhr.responseType === 'blob') {
+              responseBody = `[Blob: ${xhr.response?.size || 'unknown'} bytes]`;
+            } else if (xhr.responseType === 'arraybuffer') {
+              responseBody = `[ArrayBuffer: ${xhr.response?.byteLength || 'unknown'} bytes]`;
+            } else {
+              responseBody = typeof xhr.response === 'string' ? xhr.response : String(xhr.response);
+            }
           } catch {
             responseBody = '[Unable to read response]';
           }
@@ -168,11 +191,7 @@ class NetworkInterceptorClass {
             errorMessage: xhr.status === 0 ? 'Network Error' : undefined,
           });
         }
-
-        if (typeof originalOnReadyStateChange === 'function') {
-          originalOnReadyStateChange.apply(xhr, args as [Event]);
-        }
-      };
+      });
 
       // Error handler
       const originalOnError = xhr.onerror;
@@ -247,8 +266,7 @@ class NetworkInterceptorClass {
         }
       }
 
-      const requestBody =
-        typeof init?.body === 'string' ? init.body : init?.body ? String(init.body) : undefined;
+      const requestBody = serializeBody(init?.body);
 
       const gqlInfo = extractGraphQLInfo(requestBody);
 

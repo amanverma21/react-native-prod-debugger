@@ -58,6 +58,7 @@ export const DebugBubble: React.FC<DebugBubbleProps> = ({
           useNativeDriver: false,
         }),
         onPanResponderRelease: (_, gesture) => {
+          const { width, height } = Dimensions.get('window');
           pan.flattenOffset();
 
           Animated.spring(scale, {
@@ -67,13 +68,10 @@ export const DebugBubble: React.FC<DebugBubbleProps> = ({
           }).start();
 
           // Snap to nearest horizontal edge
-          const finalX = gesture.moveX > SCREEN.width / 2 ? SCREEN.width - size - 8 : 8;
+          const finalX = gesture.moveX > width / 2 ? width - size - 8 : 8;
 
           // Clamp vertical position
-          const finalY = Math.max(
-            50,
-            Math.min(gesture.moveY - size / 2, SCREEN.height - size - 50),
-          );
+          const finalY = Math.max(50, Math.min(gesture.moveY - size / 2, height - size - 50));
 
           Animated.spring(pan, {
             toValue: { x: finalX, y: finalY },

@@ -12,7 +12,7 @@ const perf: { now: () => number } =
 const PerformanceMonitorPanel: React.FC<PluginComponentProps> = ({ theme }) => {
   const [fps, setFps] = useState(0);
   const [avgFps, setAvgFps] = useState(0);
-  const [minFps, setMinFps] = useState(60);
+  const [minFps, setMinFps] = useState(Infinity);
   const [maxFps, setMaxFps] = useState(0);
   const [frameCount, setFrameCount] = useState(0);
   const [jsDuration, setJsDuration] = useState(0);
@@ -103,7 +103,12 @@ const PerformanceMonitorPanel: React.FC<PluginComponentProps> = ({ theme }) => {
       {/* Metrics Grid */}
       <View style={styles.metricsGrid}>
         <MetricCard label="Avg FPS" value={String(avgFps)} color={theme.info} theme={theme} />
-        <MetricCard label="Min FPS" value={String(minFps)} color={theme.error} theme={theme} />
+        <MetricCard
+          label="Min FPS"
+          value={minFps === Infinity ? '-' : String(minFps)}
+          color={theme.error}
+          theme={theme}
+        />
         <MetricCard label="Max FPS" value={String(maxFps)} color={theme.success} theme={theme} />
         <MetricCard
           label="JS Thread"
