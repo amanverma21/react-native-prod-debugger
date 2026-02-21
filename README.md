@@ -306,40 +306,6 @@ Use these IDs with `disabledPlugins` to selectively disable tools:
 
 ---
 
-## 🏗️ Architecture
-
-```
-react-native-prod-debugger/
-├── src/
-│   ├── core/
-│   │   ├── DebuggerProvider.tsx    # Main provider with config & gesture
-│   │   ├── DebugBubble.tsx         # Draggable floating button
-│   │   ├── DebugOverlay.tsx        # Full-screen overlay with tabs
-│   │   ├── GestureDetector.tsx     # Multi-touch gesture detection
-│   │   ├── PluginRegistry.ts       # Plugin lifecycle management
-│   │   ├── useDebugger.ts          # Hook for programmatic control
-│   │   ├── theme.ts                # Dark theme & customization
-│   │   ├── types.ts                # All TypeScript interfaces
-│   │   └── utils.ts                # Shared utilities
-│   ├── plugins/
-│   │   ├── network/                # XHR + Fetch interceptor
-│   │   ├── console/                # Console method wrapping
-│   │   ├── stateInspector/         # JSON tree viewer
-│   │   ├── featureFlags/           # Flag store + toggle UI
-│   │   ├── remoteConfig/           # Provider-based config viewer
-│   │   ├── storageBrowser/         # Key-value editor
-│   │   ├── performance/            # FPS & memory monitoring
-│   │   ├── deviceInfo/             # Device metadata
-│   │   ├── navigationInspector/    # React Navigation state
-│   │   ├── crashReporter/          # Error boundary + handler
-│   │   ├── customActions/          # Developer shortcuts
-│   │   ├── deepLinkTester/         # URL testing tool
-│   │   └── timeline/               # Event logging
-│   └── index.ts                    # Public API exports
-```
-
----
-
 ## 📄 License
 
 MIT © [Aman Verma](https://github.com/amanverma)
