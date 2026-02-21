@@ -1,4 +1,4 @@
-# 🐛 react-native-prod-debugger
+# react-native-prod-debugger
 
 A comprehensive, **zero-dependency**, in-app debugging toolkit for React Native that works in **production builds**.
 
@@ -62,7 +62,7 @@ export default function App() {
 ### 2. Activate
 
 Set `startVisible: true` in the configuration as shown below or use the `useDebugger()` hook to manually show the debugger.
-Tap the 🐛 bubble to open the full debug overlay.
+Tap the `</>` bubble to open the full debug overlay.
 
 That's it! All 13 tools are ready to use.
 
